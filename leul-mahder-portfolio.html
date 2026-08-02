@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leul Mahder — Graphic Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --ink:#101014;
+    --paper:#EFECE3;
+    --paper-dim:#E4E0D3;
+    --red:#D63626;
+    --cobalt:#2A4B8D;
+    --yellow:#D9A700;
+    --olive:#5C6B3E;
+    --grey:#8E897C;
+    --line: rgba(16,16,20,0.14);
+
+    --font-display: 'Archivo Black', 'Inter', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ transition:none !important; animation:none !important; }
+  }
+
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{ color:inherit; text-decoration:none; }
+  ::selection{ background:var(--ink); color:var(--paper); }
+
+  :focus-visible{
+    outline:3px solid var(--cobalt);
+    outline-offset:2px;
+  }
+
+  /* ---------- rail nav ---------- */
+  .rail{
+    position:fixed;
+    left:0; top:0; bottom:0;
+    width:64px;
+    border-right:1px solid var(--line);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:space-between;
+    padding:20px 0;
+    z-index:50;
+    background:var(--paper);
+  }
+  .rail .mark{
+    font-family:var(--font-display);
+    font-size:14px;
+    letter-spacing:0.05em;
+    writing-mode:vertical-rl;
+    text-orientation:mixed;
+  }
+  .rail .swatches{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .rail .swatches a{
+    width:14px; height:14px;
+    border-radius:50%;
+    display:block;
+    border:1px solid rgba(16,16,20,0.25);
+    transition:transform .15s ease;
+  }
+  .rail .swatches a:hover{ transform:scale(1.35); }
+  .rail .coord{
+    font-family:var(--font-mono);
+    font-size:10px;
+    color:var(--grey);
+    writing-mode:vertical-rl;
+    letter-spacing:0.08em;
+  }
+
+  main{ margin-left:64px; }
+
+  .wrap{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 40px;
+  }
+
+  /* ---------- crop marks ---------- */
+  .crops{ position:relative; }
+  .crops::before, .crops::after,
+  .crops .cm-tr, .crops .cm-br{
+    content:"";
+    position:absolute;
+    width:22px; height:22px;
+    pointer-events:none;
+  }
+  .crops::before{ top:14px; left:14px; border-top:2px solid var(--ink); border-left:2px solid var(--ink); }
+  .crops::after{ bottom:14px; left:14px; border-bottom:2px solid var(--ink); border-left:2px solid var(--ink); }
+  .crops .cm-tr{ top:14px; right:14px; border-top:2px solid var(--ink); border-right:2px solid var(--ink); }
+  .crops .cm-br{ bottom:14px; right:14px; border-bottom:2px solid var(--ink); border-right:2px solid var(--ink); }
+
+  /* ---------- hero ---------- */
+  .hero{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    position:relative;
+    border-bottom:1px solid var(--line);
+  }
+  .hero .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:0.14em;
+    color:var(--grey);
+    text-transform:uppercase;
+    margin-bottom:18px;
+  }
+  .hero h1{
+    font-family:var(--font-display);
+    font-size:clamp(3rem, 11vw, 9.5rem);
+    line-height:0.92;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  .hero h1 span{ display:block; }
+  .hero h1 .accent{ color:var(--red); }
+
+  .hero .role{
+    font-family:var(--font-mono);
+    font-size:clamp(0.9rem, 1.6vw, 1.15rem);
+    margin-top:26px;
+    color:var(--ink);
+    max-width:560px;
+  }
+  .hero .role b{ color:var(--cobalt); font-weight:600; }
+
+  .hero .links{
+    display:flex;
+    gap:14px;
+    margin-top:38px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    font-family:var(--font-mono);
+    font-size:13px;
+    letter-spacing:0.04em;
+    padding:12px 20px;
+    border:1.5px solid var(--ink);
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transition:background .15s ease, color .15s ease;
+  }
+  .btn:hover{ background:var(--ink); color:var(--paper); }
+  .btn.solid{ background:var(--ink); color:var(--paper); }
+  .btn.solid:hover{ background:var(--red); border-color:var(--red); color:var(--paper); }
+
+  .hero .index-tag{
+    position:absolute;
+    right:40px;
+    top:50%;
+    transform:translateY(-50%) rotate(90deg);
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:0.2em;
+    color:var(--grey);
+    display:none;
+  }
+  @media (min-width:900px){ .hero .index-tag{ display:block; } }
+
+  /* ---------- section shell ---------- */
+  section{ padding:110px 0; border-bottom:1px solid var(--line); }
+  section:last-of-type{ border-bottom:none; }
+
+  .label-row{
+    display:flex;
+    align-items:baseline;
+    gap:16px;
+    margin-bottom:48px;
+  }
+  .label-row .idx{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--grey);
+  }
+  .label-row h2{
+    font-family:var(--font-display);
+    font-size:clamp(1.6rem,3.2vw,2.4rem);
+    margin:0;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+  }
+  .label-row .rule{
+    flex:1;
+    height:1px;
+    background:var(--line);
+  }
+
+  /* ---------- about ---------- */
+  .about-grid{
+    display:grid;
+    grid-template-columns: 1.1fr 1.4fr;
+    gap:60px;
+  }
+  @media (max-width:800px){ .about-grid{ grid-template-columns:1fr; } }
+  .about-grid p{
+    font-size:1.15rem;
+    line-height:1.65;
+    margin:0 0 18px;
+    max-width:52ch;
+  }
+  .about-stat{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--grey);
+    border-top:1px solid var(--line);
+    padding:10px 0;
+    display:flex;
+    justify-content:space-between;
+  }
+
+  /* ---------- skills ---------- */
+  .skill-groups{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:36px;
+  }
+  @media (max-width:800px){ .skill-groups{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:520px){ .skill-groups{ grid-template-columns:1fr; } }
+  .skill-groups h3{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--grey);
+    margin:0 0 16px;
+    padding-bottom:10px;
+    border-bottom:2px solid var(--ink);
+  }
+  .skill-groups ul{ list-style:none; margin:0; padding:0; }
+  .skill-groups li{
+    font-size:1rem;
+    padding:9px 0;
+    border-bottom:1px solid var(--line);
+  }
+
+  /* ---------- work ---------- */
+  .plate{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:0;
+    border:1px solid var(--line);
+    margin-bottom:34px;
+    overflow:hidden;
+  }
+  @media (max-width:820px){ .plate{ grid-template-columns:1fr; } }
+  .plate:nth-of-type(even) .plate-art{ order:2; }
+  .plate-art{
+    background:var(--paper-dim);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:32px;
+    min-height:280px;
+    border-right:1px solid var(--line);
+  }
+  @media (max-width:820px){ .plate-art{ border-right:none; border-bottom:1px solid var(--line); } }
+  .plate-art svg{ width:100%; max-width:340px; height:auto; }
+
+  .plate-info{
+    padding:38px 40px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+  .plate-info .num{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--grey);
+    margin-bottom:10px;
+  }
+  .plate-info h3{
+    font-family:var(--font-display);
+    font-size:1.7rem;
+    margin:0 0 6px;
+    text-transform:uppercase;
+  }
+  .plate-info .kind{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--grey);
+    margin-bottom:16px;
+  }
+  .plate-info p{
+    font-size:0.98rem;
+    line-height:1.55;
+    margin:0 0 18px;
+    max-width:44ch;
+  }
+  .tags{ display:flex; gap:8px; flex-wrap:wrap; }
+  .tags span{
+    font-family:var(--font-mono);
+    font-size:11px;
+    padding:5px 10px;
+    border:1px solid var(--line);
+    color:var(--grey);
+  }
+
+  /* ---------- process ---------- */
+  .process-list{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:30px;
+  }
+  @media (max-width:800px){ .process-list{ grid-template-columns:1fr; } }
+  .process-list li{
+    list-style:none;
+    border-top:2px solid var(--ink);
+    padding-top:18px;
+  }
+  .process-list .step-num{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--grey);
+    display:block;
+    margin-bottom:10px;
+  }
+  .process-list h4{
+    font-family:var(--font-display);
+    font-size:1.1rem;
+    margin:0 0 8px;
+    text-transform:uppercase;
+  }
+  .process-list p{ margin:0; font-size:0.95rem; line-height:1.5; color:#333; }
+
+  /* ---------- contact / footer ---------- */
+  .contact{
+    padding:120px 0 90px;
+    position:relative;
+  }
+  .contact h2{
+    font-family:var(--font-display);
+    font-size:clamp(2.2rem,7vw,5rem);
+    margin:0 0 30px;
+    line-height:1;
+    text-transform:uppercase;
+  }
+  .contact h2 .accent{ color:var(--cobalt); }
+  .contact .links{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom:60px; }
+
+  footer{
+    font-family:var(--font-mono);
+    font-size:11px;
+    color:var(--grey);
+    display:flex;
+    justify-content:space-between;
+    border-top:1px solid var(--line);
+    padding-top:22px;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+</style>
+</head>
+<body>
+
+  <nav class="rail" aria-label="Section navigation">
+    <span class="mark">LM/01</span>
+    <div class="swatches" aria-hidden="false">
+      <a href="#work-kalvex" style="background:var(--cobalt)" aria-label="Jump to Kalvex project"></a>
+      <a href="#work-meridian" style="background:var(--red)" aria-label="Jump to Meridian Festival project"></a>
+      <a href="#work-root" style="background:var(--olive)" aria-label="Jump to Root and Leaf project"></a>
+      <a href="#work-northline" style="background:var(--ink)" aria-label="Jump to Northline project"></a>
+    </div>
+    <span class="coord">MIAMI / N25° W80°</span>
+  </nav>
+
+  <main>
+
+    <header class="hero crops wrap">
+      <span class="cm-tr"></span><span class="cm-br"></span>
+      <p class="eyebrow">Portfolio — Index 01 / Graphic Design</p>
+      <h1>
+        <span>LEUL</span>
+        <span class="accent">MAHDER</span>
+      </h1>
+      <p class="role">Graphic designer working across <b>identity</b>, <b>print</b>, and <b>layout systems</b>. I build visual structures — grids, marks, and type — that hold up under real content.</p>
+      <div class="links">
+        <a class="btn solid" href="https://github.com/leulmahder254-leul" target="_blank" rel="noopener">
+          GitHub — @leulmahder254-leul
+        </a>
+        <a class="btn" href="https://www.linkedin.com/in/leul-mahder-743994364/" target="_blank" rel="noopener">
+          LinkedIn Profile
+        </a>
+      </div>
+      <span class="index-tag">SCROLL — 001</span>
+    </header>
+
+    <section id="about" class="wrap">
+      <div class="label-row"><span class="idx">002</span><h2>About</h2><span class="rule"></span></div>
+      <div class="about-grid">
+        <div>
+          <p>I design with structure first — a grid, a type scale, a small set of rules — then let the content push back against it until the system earns its place.</p>
+          <p>My work moves between brand identity, poster and editorial layout, and packaging, always looking for the smallest set of decisions that make something feel considered rather than decorated.</p>
+        </div>
+        <div>
+          <div class="about-stat"><span>Focus</span><span>Identity · Layout · Print</span></div>
+          <div class="about-stat"><span>Tools</span><span>Illustrator · Photoshop · InDesign · Figma</span></div>
+          <div class="about-stat"><span>Based in</span><span>Miami, FL</span></div>
+          <div class="about-stat"><span>Open to</span><span>Freelance & collaboration</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="wrap">
+      <div class="label-row"><span class="idx">003</span><h2>Skills</h2><span class="rule"></span></div>
+      <div class="skill-groups">
+        <div>
+          <h3>Design</h3>
+          <ul>
+            <li>Brand identity systems</li>
+            <li>Typography & type pairing</li>
+            <li>Grid & layout systems</li>
+            <li>Poster & editorial design</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Production</h3>
+          <ul>
+            <li>Print-ready file prep</li>
+            <li>Packaging & die-line layout</li>
+            <li>Color systems (CMYK/Pantone)</li>
+            <li>Asset & style guide docs</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Tools</h3>
+          <ul>
+            <li>Adobe Illustrator</li>
+            <li>Adobe Photoshop</li>
+            <li>Adobe InDesign</li>
+            <li>Figma</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="work" class="wrap">
+      <div class="label-row"><span class="idx">004</span><h2>Selected Work</h2><span class="rule"></span></div>
+
+      <article class="plate" id="work-kalvex">
+        <div class="plate-art">
+          <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0" y="0" width="300" height="300" fill="none"/>
+            <circle cx="120" cy="130" r="70" fill="none" stroke="var(--cobalt)" stroke-width="3"/>
+            <circle cx="180" cy="170" r="70" fill="var(--cobalt)" opacity="0.15"/>
+            <circle cx="180" cy="170" r="70" fill="none" stroke="var(--cobalt)" stroke-width="3"/>
+            <line x1="30" y1="250" x2="270" y2="250" stroke="var(--ink)" stroke-width="1"/>
+            <line x1="30" y1="250" x2="30" y2="235" stroke="var(--ink)" stroke-width="1"/>
+            <line x1="270" y1="250" x2="270" y2="235" stroke="var(--ink)" stroke-width="1"/>
+            <text x="30" y="270" font-family="IBM Plex Mono" font-size="11" fill="var(--grey)">KALVEX / MARK STUDY</text>
+          </svg>
+        </div>
+        <div class="plate-info">
+          <span class="num">01 / 04</span>
+          <h3>Kalvex</h3>
+          <p class="kind">Brand identity — technology startup</p>
+          <p>A full identity system built around two overlapping forms, standing for the product's core idea: two data streams meeting in the middle. Delivered as a mark, type system, and a short usage guide.</p>
+          <div class="tags"><span>Identity</span><span>Logo Design</span><span>Style Guide</span></div>
+        </div>
+      </article>
+
+      <article class="plate" id="work-meridian">
+        <div class="plate-art">
+          <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+            <rect x="20" y="20" width="260" height="260" fill="none" stroke="var(--ink)" stroke-width="1"/>
+            <line x1="20" y1="150" x2="280" y2="60" stroke="var(--red)" stroke-width="10"/>
+            <line x1="20" y1="190" x2="280" y2="100" stroke="var(--red)" stroke-width="4"/>
+            <line x1="20" y1="230" x2="280" y2="140" stroke="var(--ink)" stroke-width="2"/>
+            <text x="35" y="255" font-family="Archivo Black" font-size="26" fill="var(--ink)">MRDN</text>
+            <text x="35" y="275" font-family="IBM Plex Mono" font-size="10" fill="var(--grey)">MERIDIAN FESTIVAL / 03</text>
+          </svg>
+        </div>
+        <div class="plate-info">
+          <span class="num">02 / 04</span>
+          <h3>Meridian Festival</h3>
+          <p class="kind">Poster series — music festival</p>
+          <p>A set of five posters sharing one diagonal grid and a single condensed typeface, so each night's lineup reads as part of the same series from across a room.</p>
+          <div class="tags"><span>Poster</span><span>Print</span><span>Series</span></div>
+        </div>
+      </article>
+
+      <article class="plate" id="work-root">
+        <div class="plate-art">
+          <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+            <rect x="60" y="40" width="180" height="230" rx="18" fill="none" stroke="var(--olive)" stroke-width="3"/>
+            <path d="M150 80 C 130 110, 130 150, 150 190" stroke="var(--olive)" stroke-width="2" fill="none"/>
+            <path d="M150 90 C 165 100, 175 110, 180 120" stroke="var(--olive)" stroke-width="1.5" fill="none"/>
+            <path d="M150 120 C 135 128, 125 138, 118 150" stroke="var(--olive)" stroke-width="1.5" fill="none"/>
+            <path d="M150 150 C 165 158, 175 168, 182 180" stroke="var(--olive)" stroke-width="1.5" fill="none"/>
+            <text x="90" y="240" font-family="Archivo Black" font-size="18" fill="var(--ink)">ROOT&amp;LEAF</text>
+            <text x="90" y="256" font-family="IBM Plex Mono" font-size="9" fill="var(--grey)">ORGANIC TEA CO.</text>
+          </svg>
+        </div>
+        <div class="plate-info">
+          <span class="num">03 / 04</span>
+          <h3>Root &amp; Leaf</h3>
+          <p class="kind">Packaging — organic tea brand</p>
+          <p>Packaging built around a single hand-drawn leaf-vein motif, repeated in three tones across the range so each blend is identifiable on the shelf without relying on color alone.</p>
+          <div class="tags"><span>Packaging</span><span>Illustration</span><span>Branding</span></div>
+        </div>
+      </article>
+
+      <article class="plate" id="work-northline">
+        <div class="plate-art">
+          <svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+            <rect x="20" y="20" width="260" height="260" fill="none" stroke="var(--ink)" stroke-width="1"/>
+            <rect x="35" y="35" width="70" height="230" fill="var(--grey)" opacity="0.25"/>
+            <rect x="115" y="35" width="70" height="110" fill="none" stroke="var(--ink)" stroke-width="1.5"/>
+            <rect x="195" y="35" width="70" height="110" fill="var(--ink)"/>
+            <line x1="115" y1="160" x2="265" y2="160" stroke="var(--ink)" stroke-width="1"/>
+            <line x1="115" y1="180" x2="265" y2="180" stroke="var(--ink)" stroke-width="1"/>
+            <line x1="115" y1="200" x2="220" y2="200" stroke="var(--ink)" stroke-width="1"/>
+            <text x="35" y="278" font-family="IBM Plex Mono" font-size="9" fill="var(--grey)">NORTHLINE / SPREAD 04</text>
+          </svg>
+        </div>
+        <div class="plate-info">
+          <span class="num">04 / 04</span>
+          <h3>Northline</h3>
+          <p class="kind">Editorial layout — design magazine</p>
+          <p>A four-column grid built for long-form design writing, with a strict rule set for image bleed, pull quotes, and caption placement so 40+ pages hold together as one publication.</p>
+          <div class="tags"><span>Editorial</span><span>Grid System</span><span>Layout</span></div>
+        </div>
+      </article>
+
+    </section>
+
+    <section id="process" class="wrap">
+      <div class="label-row"><span class="idx">005</span><h2>How I Work</h2><span class="rule"></span></div>
+      <ul class="process-list">
+        <li>
+          <span class="step-num">01</span>
+          <h4>Discover</h4>
+          <p>Understand the audience, the constraints, and what the piece actually needs to do before opening any design software.</p>
+        </li>
+        <li>
+          <span class="step-num">02</span>
+          <h4>Design</h4>
+          <p>Build the system — grid, type, color — then test it against real content, not placeholder text.</p>
+        </li>
+        <li>
+          <span class="step-num">03</span>
+          <h4>Deliver</h4>
+          <p>Hand off production-ready files and a short usage guide so the work holds up without me in the room.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="contact wrap crops" id="contact">
+      <span class="cm-tr"></span><span class="cm-br"></span>
+      <h2>Let's make<br>something <span class="accent">worth looking at.</span></h2>
+      <div class="links">
+        <a class="btn solid" href="https://github.com/leulmahder254-leul" target="_blank" rel="noopener">GitHub — @leulmahder254-leul</a>
+        <a class="btn" href="https://www.linkedin.com/in/leul-mahder-743994364/" target="_blank" rel="noopener">LinkedIn Profile</a>
+      </div>
+      <footer>
+        <span>LEUL MAHDER — GRAPHIC DESIGN PORTFOLIO</span>
+        <span>© 2026</span>
+      </footer>
+    </section>
+
+  </main>
+
+</body>
+</html>
